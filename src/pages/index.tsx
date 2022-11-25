@@ -1,5 +1,7 @@
 import React, { FC } from "react";
-import { useForm } from "react-hook-form";
+import Button from "../components/Button";
+import DropDown from "../components/DropDown";
+import Form from "../components/Form";
 import FormInput from "../components/formInput";
 
 export type RegistrationFormFields = {
@@ -14,58 +16,57 @@ export const emailPattern = {
 };
 
 const RegistrationForm: FC<any> = () => {
-  const {
-    register,
-    handleSubmit,
-    reset,
-    formState: { errors },
-  } = useForm<RegistrationFormFields>();
-
-  const onSubmit = handleSubmit((data) => {
-    console.log("submitting...", data);
-    reset();
-  });
+  const options = [
+    {
+      value: "Apple 1",
+      label: "Apple l1",
+    },
+    {
+      value: "Apple 2",
+      label: "Apple 22",
+    },
+    {
+      value: "Apple 3",
+      label: "Apple 33",
+    },
+  ];
 
   return (
-    <form onSubmit={onSubmit}>
-      <FormInput
-        id="firstName"
-        type="text"
-        name="firstName"
-        label="First Name"
-        placeholder="First Name"
-        register={register}
-        rules={{ required: "enter your first name." }}
-        errors={errors}
-      />
-
-      <FormInput
-        id="lastName"
-        type="text"
-        name="lastName"
-        label="Last Name"
-        placeholder="Last Name"
-        register={register}
-        rules={{ required: "enter your last name." }}
-        errors={errors}
-      />
-
-      <FormInput
-        id="email"
-        type="email"
-        name="email"
-        label="Email Address"
-        placeholder="Email Address"
-        register={register}
-        rules={{
-          required: "enter your email address.",
-          pattern: emailPattern,
-        }}
-        errors={errors}
-      />
-      <button type="submit">Submit</button>
-      <button type="reset">Reset</button>
-    </form>
+    <>
+      <Form>
+        <DropDown name="Fruit picker" label="Fruit" options={options} />
+        <FormInput
+          id="firstName"
+          type="text"
+          name="firstName"
+          label="First Name"
+          placeholder="First Name"
+          rules={{ required: "enter your first name." }}
+        />
+        <FormInput
+          id="lastName"
+          type="text"
+          name="lastName"
+          label="Last Name"
+          placeholder="Last Name"
+          rules={{ required: "enter your last name." }}
+        />
+        <FormInput
+          id="email"
+          type="email"
+          name="email"
+          label="Email Address"
+          placeholder="Email Address"
+          rules={{
+            required: "enter your email address.",
+            pattern: emailPattern,
+          }}
+        />
+        <Button type="submit" name="submit" text="Submit" />
+        <button type="reset">Reset</button>
+      </Form>
+      <DropDown name="Fruit picker" label="Fruit" options={options} />
+    </>
   );
 };
 export default RegistrationForm;
