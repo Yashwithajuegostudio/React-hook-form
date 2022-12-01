@@ -1,6 +1,5 @@
-import { useState } from "react";
-
-const DropDown: React.FC<any> = ({
+import { FC } from "react";
+const DropDown: FC<any> = ({
   options,
   label,
   disabled = false,
@@ -23,11 +22,3 @@ const DropDown: React.FC<any> = ({
   );
 };
 export default DropDown;
-{
-  /* {errors && errors[name]?.type === "required" && (
-        <span>{errors[name]?.message}</span>
-      )}
-      {errors && errors[name]?.type === "minLength" && (
-        <span>{errors[name]?.message}</span>
-      )} */
-}

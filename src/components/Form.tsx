@@ -1,26 +1,31 @@
 import React, { FC } from "react";
 import { useForm } from "react-hook-form";
-import { RegistrationFormFields } from "../pages";
-const Form: FC<any> = ({ children }) => {
+const Form: FC<any> = ({ children, onSubmit, onError, style }) => {
   const {
     register,
     handleSubmit,
-    reset,
     formState: { errors },
-  } = useForm<RegistrationFormFields>();
-
-  const onSubmit = handleSubmit((data) => {
-    console.log("submited", data);
-    reset();
-  });
+  } = useForm();
   return (
-    <form onSubmit={onSubmit}>
-      {children?.map((element: any) => {
-        return {
-          ...element,
-          props: { ...element.props, register, errors },
-        };
-      })}
+    <form onSubmit={handleSubmit(onSubmit, onError)} style={style}>
+      {children?.map((element: any) =>
+        element?.props?.children?.length > 1 ? (
+          <div style={{ display: "flex", flexDirection: "row" }}>
+            {typeof element?.props?.children == "object" &&
+              element?.props?.children.map((subChild: any) => {
+                return {
+                  ...subChild,
+                  props: { ...subChild.props, register, errors },
+                };
+              })}
+          </div>
+        ) : (
+          {
+            ...element,
+            props: { ...element.props, register, errors },
+          }
+        )
+      )}
     </form>
   );
 };
