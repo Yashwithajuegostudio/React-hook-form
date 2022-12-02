@@ -2,15 +2,15 @@ import React, { FC, forwardRef } from "react";
 
 export type InputType = "text" | "email";
 
-export type InputProps = {
+export interface InputProps {
   id: string;
   name: string;
   label: string;
   type?: InputType;
   placeholder: string;
-};
+}
 
-const Input: FC<any> = forwardRef<HTMLInputElement, InputProps>(
+const Input: FC<InputProps> = forwardRef<HTMLInputElement, InputProps>(
   ({ id, name, type = "text", placeholder, ...props }, ref) => {
     return (
       <input

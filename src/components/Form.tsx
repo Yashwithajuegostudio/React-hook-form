@@ -1,6 +1,12 @@
 import React, { FC } from "react";
 import { useForm } from "react-hook-form";
-const Form: FC<any> = ({ children, onSubmit, onError, style }) => {
+interface FormProps {
+  children: JSX.Element[];
+  onSubmit: Function | any;
+  onError: Function | any;
+  style: object;
+}
+const Form: FC<FormProps> = ({ children, onSubmit, onError, style }) => {
   const {
     register,
     handleSubmit,
@@ -8,11 +14,11 @@ const Form: FC<any> = ({ children, onSubmit, onError, style }) => {
   } = useForm();
   return (
     <form onSubmit={handleSubmit(onSubmit, onError)} style={style}>
-      {children?.map((element: any) =>
+      {children?.map((element: JSX.Element, index: number) =>
         element?.props?.children?.length > 1 ? (
-          <div style={{ display: "flex", flexDirection: "row" }}>
+          <div key={index} style={{ display: "flex", flexDirection: "row" }}>
             {typeof element?.props?.children == "object" &&
-              element?.props?.children.map((subChild: any) => {
+              element?.props?.children.map((subChild: JSX.Element) => {
                 return {
                   ...subChild,
                   props: { ...subChild.props, register, errors },
