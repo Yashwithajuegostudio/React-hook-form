@@ -1,4 +1,5 @@
 import React, { FC, forwardRef } from "react";
+import styled from "styled-components";
 
 export type InputType = "text" | "email";
 
@@ -10,10 +11,11 @@ export interface InputProps {
   placeholder: string;
 }
 
+// eslint-disable-next-line react/display-name
 const Input: FC<InputProps> = forwardRef<HTMLInputElement, InputProps>(
   ({ id, name, type = "text", placeholder, ...props }, ref) => {
     return (
-      <input
+      <InputBox
         id={id}
         ref={ref}
         name={name}
@@ -25,3 +27,10 @@ const Input: FC<InputProps> = forwardRef<HTMLInputElement, InputProps>(
   }
 );
 export default Input;
+const InputBox = styled.input`
+  padding: 0.3rem 0.5rem;
+  width: 21rem;
+
+  border: 1px solid #e4e6e8;
+  border-radius: 8px;
+`;
