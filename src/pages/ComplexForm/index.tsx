@@ -3,6 +3,11 @@ import Button from "../../components/Button";
 import DropDown from "../../components/DropDown";
 import Form from "../../components/Form";
 import FormInput from "../../components/formInput";
+import styled from "styled-components";
+import {
+  FormFooterContainer,
+  FormInputContainer,
+} from "../../../styles/globalStyles";
 
 export const emailPattern = {
   value: new RegExp("^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,4}$", "ig"),
@@ -37,7 +42,7 @@ const ComplexForm: FC = () => {
     },
   ];
   const onSubmit = (data: ComplexFormProps) => {
-    console.log(data);
+    console.log(data, "data");
     reset();
     setFirstName("");
     setLastName("");
@@ -49,24 +54,21 @@ const ComplexForm: FC = () => {
   };
 
   return (
-    <div>
+    <FormOuterContainer>
       <Form
         onSubmit={onSubmit}
         onError={onError}
         // reset={reset}
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          flexDirection: "column",
-        }}
       >
-        <>
+        {/* <div> */}
+        <Column>
           <DropDown
             name="FruitPickerDropDown"
             label="Fruit"
             options={options}
+            style={{ width: "22rem", padding: " 0.3rem 0.5rem" }}
           />
+
           <FormInput
             id="firstName"
             type="text"
@@ -79,48 +81,68 @@ const ComplexForm: FC = () => {
                 setFirstName(e.target.value),
             }}
           />
+        </Column>
+        {/* </div>  */}
+
+        <Column>
+          <FormInput
+            id="lastName"
+            type="text"
+            name="lastName"
+            label="Last Name"
+            placeholder="Last Name"
+            rules={{
+              required: true,
+              onChange: (e: React.ChangeEvent<HTMLInputElement>) =>
+                setLastName(e.target.value),
+            }}
+          />
+
+          <FormInput
+            id="AutoCalc"
+            type="text"
+            name="autoCalc"
+            label="Auto calculate"
+            placeholder="Auto Calculate"
+            value={
+              firstName !== "" || lastName !== "" ? firstName + lastName : ""
+            }
+            rules={{
+              disabled: true,
+            }}
+          />
+          <FormInput
+            id="email"
+            type="email"
+            name="email"
+            label="Email Address"
+            placeholder="Email Address"
+            rules={{
+              required: true,
+              pattern: emailPattern,
+            }}
+          />
+        </Column>
+
+        <FormFooterContainer>
           <Button type="reset" name="Reset" onClick={reset} text="Reset" />
-        </>
-        <FormInput
-          id="lastName"
-          type="text"
-          name="lastName"
-          label="Last Name"
-          placeholder="Last Name"
-          rules={{
-            required: true,
-            onChange: (e: React.ChangeEvent<HTMLInputElement>) =>
-              setLastName(e.target.value),
-          }}
-        />
-        <FormInput
-          id="AutoCalc"
-          type="text"
-          name="autoCalc"
-          label="Auto calculate"
-          placeholder="Auto Calculate"
-          value={
-            firstName !== "" || lastName !== "" ? firstName + lastName : ""
-          }
-          rules={{
-            disabled: true,
-          }}
-        />
-        <FormInput
-          id="email"
-          type="email"
-          name="email"
-          label="Email Address"
-          placeholder="Email Address"
-          rules={{
-            required: true,
-            pattern: emailPattern,
-          }}
-        />
-        <Button type="submit" name="submit" text="Submit" />
+          <Button type="submit" name="submit" text="Submit" />
+        </FormFooterContainer>
       </Form>
-      <DropDown name="Fruit picker" label="Fruit" options={options} />
-    </div>
+    </FormOuterContainer>
   );
 };
 export default ComplexForm;
+
+export const FormOuterContainer = styled.main`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: auto 4rem;
+`;
+
+export const Column = styled.div`
+  /* display: flex;
+  flex-direction: column;
+  align-items: center; */
+`;
