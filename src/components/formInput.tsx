@@ -1,6 +1,8 @@
 import React, { FC } from "react";
 import Input from "./Input";
 import { RegisterOptions } from "react-hook-form";
+import styled from "styled-components";
+import { FormInputContainer } from "../../styles/globalStyles";
 
 export type FormInputProps = {
   id?: string;
@@ -26,10 +28,10 @@ const FormInput: FC<FormInputProps> = ({
   ...props
 }: FormInputProps): JSX.Element => {
   return (
-    <div>
+    <FormInputContainer>
       <label>{label}</label>
       <Input name={name} {...props} {...(register && register(name, rules))} />
-    </div>
+    </FormInputContainer>
   );
 };
 export default FormInput;
