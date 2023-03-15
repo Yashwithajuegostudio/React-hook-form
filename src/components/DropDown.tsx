@@ -1,5 +1,7 @@
 import { FC } from "react";
 import { DropDownOptionProps } from "../pages/ComplexForm";
+import { FormInputContainer } from "../../styles/globalStyles";
+import styled from "styled-components";
 
 interface DropDownProps {
   options: DropDownOptionProps[];
@@ -19,7 +21,7 @@ const DropDown: FC<DropDownProps> = ({
   rules,
 }) => {
   return (
-    <>
+    <FormInputContainer>
       <label>{label}</label>
       <select {...(register && register(name, rules))} style={style}>
         {/* <select style={style}> */}
@@ -28,7 +30,7 @@ const DropDown: FC<DropDownProps> = ({
           <option key={index}>{option.label}</option>
         ))}
       </select>
-    </>
+    </FormInputContainer>
   );
 };
 export default DropDown;
